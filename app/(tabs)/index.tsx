@@ -27,15 +27,25 @@ const colors = Colors.dark;
 
 // Category color mapping by slug
 const getCategoryColors = (slug: string) => {
-  const colorMap: Record<string, { from: string; to: string }> = {
-    seramik: CategoryColors.seramik,
-    resim: CategoryColors.resim,
-    muzik: CategoryColors.muzik,
-    dans: CategoryColors.dans,
-    'el-sanatlari': CategoryColors.elSanatlari,
-    fotograf: CategoryColors.fotograf,
-  };
-  return colorMap[slug] || CategoryColors.seramik;
+  // Return the color from CategoryColors if it exists, otherwise use a default gradient
+  const categoryColor = (CategoryColors as any)[slug];
+  if (categoryColor) {
+    return categoryColor;
+  }
+
+  // Default fallback colors if slug not found
+  const fallbackColors = [
+    { from: '#a855f7', to: '#9333ea' }, // purple
+    { from: '#3b82f6', to: '#2563eb' }, // blue
+    { from: '#22c55e', to: '#16a34a' }, // green
+    { from: '#f97316', to: '#ea580c' }, // orange
+    { from: '#ec4899', to: '#db2777' }, // pink
+    { from: '#eab308', to: '#ca8a04' }, // yellow
+  ];
+
+  // Use hash of slug to deterministically select a color
+  const hash = slug.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return fallbackColors[hash % fallbackColors.length];
 };
 
 export default function HomeScreen() {

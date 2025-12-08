@@ -67,7 +67,18 @@ export const CategoryColors = {
   muzik: { from: '#3b82f6', to: '#2563eb' }, // blue
   dans: { from: '#f97316', to: '#ea580c' }, // orange
   elSanatlari: { from: '#22c55e', to: '#16a34a' }, // green
+  'el-sanatlari': { from: '#22c55e', to: '#16a34a' }, // green (kebab-case)
   fotograf: { from: '#eab308', to: '#ca8a04' }, // yellow
+  'aile-cocuk': { from: '#ec4899', to: '#db2777' }, // pink
+  'deneyim-ogrenme': { from: '#06b6d4', to: '#0891b2' }, // cyan
+  'doga-outdoor': { from: '#84cc16', to: '#65a30d' }, // lime
+  'el-isi-zanaat': { from: '#f59e0b', to: '#d97706' }, // amber
+  'kisisel-gelisim-saglik': { from: '#8b5cf6', to: '#7c3aed' }, // violet
+  'kulturel-geleneksel': { from: '#f43f5e', to: '#e11d48' }, // rose
+  'moda-giyim': { from: '#ec4899', to: '#db2777' }, // pink
+  'performans-sahne': { from: '#f97316', to: '#ea580c' }, // orange
+  'sanat-el-sanatlari': { from: '#a855f7', to: '#9333ea' }, // purple
+  'teknoloji-dijital': { from: '#3b82f6', to: '#2563eb' }, // blue
 };
 
 // Spacing constants
