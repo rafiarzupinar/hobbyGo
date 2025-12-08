@@ -4,7 +4,7 @@ import { useLocalSearchParams, Stack } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/services/supabase';
-import { EventCard } from '@/components/common/EventCard';
+import { EventCard } from '@/components/events/EventCard';
 import { Colors, Spacing, FontSizes } from '@/constants/theme';
 import { Event } from '@/types';
 
