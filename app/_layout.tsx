@@ -109,17 +109,24 @@ function RootLayoutNav() {
   useEffect(() => {
     if (isLoading) return;
 
+    // TEMPORARILY DISABLED: Skip authentication for demo purposes
+    // Users will be redirected directly to the main app
     const inAuthGroup = segments[0] === '(tabs)';
-    const inCreatePages = segments[0] === 'create-event' || segments[0] === 'create-workshop';
-
     const currentSegment = segments[0] as string;
 
+    // Always redirect to main app on launch
+    if (!inAuthGroup && currentSegment !== 'event' && currentSegment !== 'workshop' && currentSegment !== 'create-event' && currentSegment !== 'create-workshop') {
+      router.replace('/(tabs)');
+    }
+
+    /* ORIGINAL AUTH CODE - COMMENTED OUT FOR DEMO
     if (!isAuthenticated && (inAuthGroup || inCreatePages)) {
       router.replace('/login');
     } else if (isAuthenticated && !inAuthGroup && currentSegment !== 'register' && currentSegment !== 'event' && currentSegment !== 'workshop' && !inCreatePages) {
       router.replace('/(tabs)');
     }
-  }, [isAuthenticated, segments, isLoading]);
+    */
+  }, [segments, isLoading]);
 
   // Show loading screen while restoring session
   if (isLoading) {
