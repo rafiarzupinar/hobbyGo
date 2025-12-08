@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, Stack, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/services/supabase';
 import { EventCard } from '@/components/events/EventCard';
-import { Colors, Spacing, FontSizes } from '@/constants/theme';
-import { Event } from '@/types';
+import { Colors, Spacing, FontSizes, BorderRadius } from '@/constants/theme';
+import { Event, Subcategory } from '@/types';
+import { Ionicons } from '@expo/vector-icons';
 
 const colors = Colors.dark;
 
 export default function CategoryScreen() {
   const router = useRouter();
   const { slug } = useLocalSearchParams();
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
 
   // Kategori bilgisini al
   const { data: category } = useQuery({
@@ -27,6 +29,24 @@ export default function CategoryScreen() {
       if (error) throw error;
       return data;
     },
+  });
+
+  // Alt kategorileri al
+  const { data: subcategories = [] } = useQuery({
+    queryKey: ['subcategories', category?.id],
+    queryFn: async () => {
+      if (!category?.id) return [];
+
+      const { data, error } = await supabase
+        .from('subcategories')
+        .select('*')
+        .eq('category_id', category.id)
+        .order('name');
+
+      if (error) throw error;
+      return data as Subcategory[];
+    },
+    enabled: !!category?.id,
   });
 
   // Bu kategorideki eventleri al
@@ -79,6 +99,63 @@ export default function CategoryScreen() {
           </View>
         )}
 
+        {/* Alt Kategoriler */}
+        {subcategories.length > 0 && (
+          <View style={styles.subcategoriesSection}>
+            <Text style={styles.subcategoriesTitle}>Alt Kategoriler</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.subcategoriesContainer}
+            >
+              <TouchableOpacity
+                style={[
+                  styles.subcategoryChip,
+                  !selectedSubcategory && styles.subcategoryChipActive
+                ]}
+                onPress={() => setSelectedSubcategory(null)}
+              >
+                <Ionicons
+                  name="apps"
+                  size={16}
+                  color={!selectedSubcategory ? colors.primary : colors.foreground}
+                />
+                <Text style={[
+                  styles.subcategoryText,
+                  !selectedSubcategory && styles.subcategoryTextActive
+                ]}>
+                  Tümü
+                </Text>
+              </TouchableOpacity>
+
+              {subcategories.map((subcat) => (
+                <TouchableOpacity
+                  key={subcat.id}
+                  style={[
+                    styles.subcategoryChip,
+                    selectedSubcategory === subcat.id && styles.subcategoryChipActive
+                  ]}
+                  onPress={() => setSelectedSubcategory(subcat.id)}
+                >
+                  {subcat.icon && (
+                    <Ionicons
+                      name={subcat.icon as any}
+                      size={16}
+                      color={selectedSubcategory === subcat.id ? colors.primary : colors.foreground}
+                    />
+                  )}
+                  <Text style={[
+                    styles.subcategoryText,
+                    selectedSubcategory === subcat.id && styles.subcategoryTextActive
+                  ]}>
+                    {subcat.name}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        )}
+
         {isLoading ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={colors.primary} />
@@ -121,6 +198,46 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.sm,
     color: colors.mutedForeground,
     lineHeight: 20,
+  },
+  subcategoriesSection: {
+    paddingVertical: Spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  subcategoriesTitle: {
+    fontSize: FontSizes.md,
+    fontWeight: '600',
+    color: colors.foreground,
+    paddingHorizontal: Spacing.lg,
+    marginBottom: Spacing.md,
+  },
+  subcategoriesContainer: {
+    paddingHorizontal: Spacing.lg,
+    gap: Spacing.sm,
+  },
+  subcategoryChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+    backgroundColor: colors.card,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: BorderRadius.full,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.sm,
+  },
+  subcategoryChipActive: {
+    backgroundColor: colors.primary + '1A',
+    borderColor: colors.primary,
+  },
+  subcategoryText: {
+    fontSize: FontSizes.sm,
+    fontWeight: '500',
+    color: colors.foreground,
+  },
+  subcategoryTextActive: {
+    color: colors.primary,
+    fontWeight: '600',
   },
   loadingContainer: {
     flex: 1,
