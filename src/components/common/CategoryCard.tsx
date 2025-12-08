@@ -13,6 +13,27 @@ interface CategoryCardProps {
 export const CategoryCard: React.FC<CategoryCardProps> = ({ category, onPress }) => {
   const getGradientColors = (color: string): [string, string] => {
     const colorMap: Record<string, [string, string]> = {
+      // Sanat & El Sanatları - Pembe
+      '#e91e63': ['#e91e63', '#f06292'],
+      // Deneyim & Öğrenme - Turuncu
+      '#ff9800': ['#ff9800', '#ffb74d'],
+      // Aile & Çocuk - Turkuaz
+      '#00bcd4': ['#00bcd4', '#4dd0e1'],
+      // Kişisel Gelişim & Sağlık - Mor
+      '#9c27b0': ['#9c27b0', '#ba68c8'],
+      // Performans & Sahne - Kırmızı
+      '#f44336': ['#f44336', '#e57373'],
+      // Teknoloji & Dijital - Mavi
+      '#2196f3': ['#2196f3', '#64b5f6'],
+      // Doğa & Outdoor - Yeşil
+      '#4caf50': ['#4caf50', '#81c784'],
+      // Moda & Giyim - Pembe
+      '#ff4081': ['#ff4081', '#ff80ab'],
+      // El İşi & Zanaat - Kahverengi
+      '#795548': ['#795548', '#a1887f'],
+      // Kültürel & Geleneksel - Koyu Mor
+      '#673ab7': ['#673ab7', '#9575cd'],
+      // Eski renkler (geriye dönük uyumluluk için)
       '#a855f7': [theme.colors.categories.purple.from, theme.colors.categories.purple.to],
       '#ec4899': [theme.colors.categories.pink.from, theme.colors.categories.pink.to],
       '#3b82f6': [theme.colors.categories.blue.from, theme.colors.categories.blue.to],
