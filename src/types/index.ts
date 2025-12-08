@@ -58,6 +58,7 @@ export interface Event {
   id: string;
   workshop_id: string;
   category_id?: string;
+  subcategory_id?: string;
   title: string;
   description: string;
   image_url?: string;
@@ -75,6 +76,7 @@ export interface Event {
   updated_at: string;
   workshop?: Workshop; // Joined data
   category?: Category; // Joined data
+  subcategory?: Subcategory; // Joined data
 }
 
 export interface EventBooking {

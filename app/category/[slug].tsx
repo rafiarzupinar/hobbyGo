@@ -49,9 +49,9 @@ export default function CategoryScreen() {
     enabled: !!category?.id,
   });
 
-  // Bu kategorideki eventleri al
+  // Bu kategorideki eventleri al (alt kategori filtresi ile)
   const { data: events = [], isLoading } = useQuery({
-    queryKey: ['category-events', slug],
+    queryKey: ['category-events', slug, selectedSubcategory],
     queryFn: async () => {
       const { data: categoryData } = await supabase
         .from('categories')
@@ -61,16 +61,23 @@ export default function CategoryScreen() {
 
       if (!categoryData) return [];
 
-      const { data, error } = await supabase
+      let query = supabase
         .from('events')
         .select(`
           *,
-          workshop:workshops(*)
+          workshop:workshops(*),
+          subcategory:subcategories(*)
         `)
         .eq('category_id', categoryData.id)
         .eq('is_active', true)
-        .gte('start_date', new Date().toISOString())
-        .order('start_date', { ascending: true });
+        .gte('start_date', new Date().toISOString());
+
+      // Alt kategori filtresi varsa ekle
+      if (selectedSubcategory) {
+        query = query.eq('subcategory_id', selectedSubcategory);
+      }
+
+      const { data, error } = await query.order('start_date', { ascending: true });
 
       if (error) throw error;
       return data as Event[];
