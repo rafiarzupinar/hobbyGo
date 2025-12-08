@@ -1,0 +1,49 @@
+{
+  "common": {
+    "welcome": "Hoş Geldiniz",
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "logout": "Çıkış Yap",
+    "email": "E-posta",
+    "password": "Şifre",
+    "name": "İsim",
+    "submit": "Gönder",
+    "cancel": "İptal",
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı"
+  },
+  "auth": {
+    "loginTitle": "Giriş Yap",
+    "registerTitle": "Hesap Oluştur",
+    "emailPlaceholder": "E-posta adresinizi girin",
+    "passwordPlaceholder": "Şifrenizi girin",
+    "namePlaceholder": "Adınızı girin",
+    "forgotPassword": "Şifremi Unuttum?",
+    "dontHaveAccount": "Hesabınız yok mu?",
+    "alreadyHaveAccount": "Zaten hesabınız var mı?",
+    "signInWithBiometric": "Biyometrik ile giriş yap",
+    "loginSuccess": "Giriş başarılı!",
+    "registerSuccess": "Kayıt başarılı!",
+    "loginError": "Giriş başarısız. Bilgilerinizi kontrol edin.",
+    "registerError": "Kayıt başarısız. Lütfen tekrar deneyin.",
+    "invalidEmail": "Geçersiz e-posta adresi",
+    "passwordTooShort": "Şifre en az 6 karakter olmalı",
+    "nameRequired": "İsim gerekli"
+  },
+  "home": {
+    "title": "Ana Sayfa",
+    "welcome": "Tekrar hoş geldiniz!"
+  },
+  "profile": {
+    "title": "Profil",
+    "editProfile": "Profili Düzenle",
+    "settings": "Ayarlar",
+    "about": "Hakkında"
+  },
+  "errors": {
+    "networkError": "Ağ hatası. Lütfen bağlantınızı kontrol edin.",
+    "unknownError": "Bilinmeyen bir hata oluştu",
+    "sessionExpired": "Oturumunuz sona erdi. Lütfen tekrar giriş yapın."
+  }
+}

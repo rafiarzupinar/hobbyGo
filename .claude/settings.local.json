@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm start)",
+      "Bash(npm run android:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill /PID 18304 /F)",
+      "Bash(taskkill:*)",
+      "Bash(copy:*)",
+      "Bash(npx expo start:*)",
+      "Bash(ren:*)",
+      "Bash(timeout /t 5 /nobreak)",
+      "mcp__supabase__execute_sql",
+      "mcp__supabase__apply_migration",
+      "Bash(adb devices:*)",
+      "Bash(emulator -list-avds:*)",
+      "Bash(adb kill-server:*)",
+      "Bash(adb start-server:*)",
+      "Bash(npx expo run:android)",
+      "Bash(./gradlew clean:*)",
+      "Bash(npm install)",
+      "Bash(adb shell am start:*)",
+      "Bash(adb install:*)",
+      "Bash(npx expo install:*)",
+      "Bash(npx expo prebuild:*)",
+      "Bash(npx expo export:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}

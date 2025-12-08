@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kullanıcı Profili</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: 'var(--background)',
+            foreground: 'var(--foreground)',
+            primary: { DEFAULT: 'var(--primary)', foreground: 'var(--primary-foreground)' },
+            secondary: { DEFAULT: 'var(--secondary)', foreground: 'var(--secondary-foreground)' },
+            muted: { DEFAULT: 'var(--muted)', foreground: 'var(--muted-foreground)' },
+            accent: { DEFAULT: 'var(--accent)', foreground: 'var(--accent-foreground)' },
+            destructive: { DEFAULT: 'var(--destructive)' },
+            card: { DEFAULT: 'var(--card)', foreground: 'var(--card-foreground)' },
+            border: 'var(--border)',
+            input: 'var(--input)',
+            ring: 'var(--ring)',
+          },
+          borderRadius: { DEFAULT: 'var(--radius)' },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    :root {
+      --background: #000000;
+      --foreground: #ffffff;
+      --primary: #10b981;
+      --primary-foreground: #ffffff;
+      --secondary: #111111;
+      --secondary-foreground: #ffffff;
+      --muted: #262626;
+      --muted-foreground: #a1a1aa;
+      --accent: #111111;
+      --accent-foreground: #ffffff;
+      --destructive: #ef4444;
+      --card: #111111;
+      --card-foreground: #ffffff;
+      --border: #262626;
+      --input: #262626;
+      --ring: #10b981;
+      --radius: 1rem;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .mobile-container {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 431px) {
+      body {
+        background: #1a1a1a;
+        padding: 20px;
+      }
+      .mobile-container {
+        border-radius: 40px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        min-height: calc(100vh - 40px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-container">
+    <div class="flex flex-col min-h-full bg-background text-foreground overflow-y-auto pb-2">
+  
+  <div class="bg-gradient-to-b from-primary to-primary/90 px-6 pt-12 pb-2">
+    <div class="flex items-start justify-between mb-6">
+      <div class="flex items-center gap-4">
+        <div class="w-20 h-20 rounded-full border-4 border-white overflow-hidden">
+          <img src="https://i.pravatar.cc/150?img=33" alt="Profile" class="w-full h-full object-cover" >
+        </div>
+        <div class="text-white">
+          <h1 class="text-xl font-bold mb-1">Ayşe Yılmaz</h1>
+          <p class="text-sm text-white/80">ayse.yilmaz@email.com</p>
+        </div>
+      </div>
+      <button class="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+        <iconify-icon icon="solar:pen-bold" class="w-5 h-5 text-white"></iconify-icon>
+      </button>
+    </div>
+    
+    <div class="grid grid-cols-3 gap-3">
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-3 text-center">
+        <p class="text-2xl font-bold text-white mb-1">24</p>
+        <p class="text-xs text-white/80">Etkinlik</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-3 text-center">
+        <p class="text-2xl font-bold text-white mb-1">12</p>
+        <p class="text-xs text-white/80">Favori</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-3 text-center">
+        <p class="text-2xl font-bold text-white mb-1">8</p>
+        <p class="text-xs text-white/80">Kategori</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-background -mt-4 rounded-t-3xl">
+    <div class="flex border-b border-border px-2 sticky top-0 bg-background z-10">
+      <button class="flex-1 py-4 text-sm font-semibold text-primary border-b-2 border-primary">
+        Kayıtlı Etkinliklerim
+      </button>
+      <button class="flex-1 py-4 text-sm font-semibold text-muted-foreground">
+        Favoriler
+      </button>
+      <button class="flex-1 py-4 text-sm font-semibold text-muted-foreground">
+        Ayarlar
+      </button>
+    </div>
+
+    <div class="px-6 py-4">
+      <div class="mb-4">
+        <h2 class="text-base font-semibold mb-3">Yaklaşan Etkinlikler</h2>
+        
+        <div class="bg-card rounded-2xl p-4 border border-border mb-3">
+          <div class="flex gap-3 mb-3">
+            <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+              <img src="https://picsum.photos/seed/workshop1/200/200" alt="Event" class="w-full h-full object-cover" >
+            </div>
+            <div class="flex-1">
+              <h3 class="font-semibold text-sm mb-1">Seramik Atölyesi</h3>
+              <p class="text-xs text-muted-foreground mb-1">Sanat Evi</p>
+              <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                <iconify-icon icon="solar:calendar-bold" class="w-4 h-4"></iconify-icon>
+                <span>15 Ocak 2024, 14:00</span>
+              </div>
+            </div>
+            <button class="p-2 bg-primary/10 rounded-lg h-fit">
+              <iconify-icon icon="solar:qr-code-bold" class="w-5 h-5 text-primary"></iconify-icon>
+            </button>
+          </div>
+          <button class="w-full py-2.5 bg-primary text-white font-semibold rounded-xl text-sm">
+            Check-in Yap
+          </button>
+        </div>
+
+        <div class="bg-card rounded-2xl p-4 border border-border mb-3">
+          <div class="flex gap-3 mb-3">
+            <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+              <img src="https://picsum.photos/seed/workshop2/200/200" alt="Event" class="w-full h-full object-cover" >
+            </div>
+            <div class="flex-1">
+              <h3 class="font-semibold text-sm mb-1">Yoga & Meditasyon</h3>
+              <p class="text-xs text-muted-foreground mb-1">Zen Studio</p>
+              <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                <iconify-icon icon="solar:calendar-bold" class="w-4 h-4"></iconify-icon>
+                <span>18 Ocak 2024, 09:00</span>
+              </div>
+            </div>
+            <button class="p-2 bg-primary/10 rounded-lg h-fit">
+              <iconify-icon icon="solar:qr-code-bold" class="w-5 h-5 text-primary"></iconify-icon>
+            </button>
+          </div>
+          <button class="w-full py-2.5 bg-primary text-white font-semibold rounded-xl text-sm">
+            Check-in Yap
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-base font-semibold mb-3">Geçmiş Etkinlikler</h2>
+        
+        <div class="bg-card rounded-2xl p-4 border border-border mb-3 relative overflow-hidden">
+          <div class="absolute top-3 right-3">
+            <div class="w-6 h-6 bg-[#22C55E] rounded-full flex items-center justify-center">
+              <iconify-icon icon="solar:check-circle-bold" class="w-4 h-4 text-white"></iconify-icon>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 opacity-90">
+              <img src="https://picsum.photos/seed/workshop3/200/200" alt="Event" class="w-full h-full object-cover" >
+            </div>
+            <div class="flex-1">
+              <h3 class="font-semibold text-sm mb-1">Fotoğrafçılık Temelleri</h3>
+              <p class="text-xs text-muted-foreground mb-1">Objektif Stüdyo</p>
+              <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                <iconify-icon icon="solar:calendar-bold" class="w-4 h-4"></iconify-icon>
+                <span>10 Ocak 2024</span>
+              </div>
+              <div class="flex items-center gap-1 text-xs text-[#22C55E] mt-1 font-medium">
+                <iconify-icon icon="solar:check-circle-bold" class="w-4 h-4"></iconify-icon>
+                <span>Tamamlandı</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-card rounded-2xl p-4 border border-border mb-3 relative overflow-hidden">
+          <div class="absolute top-3 right-3">
+            <div class="w-6 h-6 bg-[#22C55E] rounded-full flex items-center justify-center">
+              <iconify-icon icon="solar:check-circle-bold" class="w-4 h-4 text-white"></iconify-icon>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 opacity-90">
+              <img src="https://picsum.photos/seed/workshop4/200/200" alt="Event" class="w-full h-full object-cover" >
+            </div>
+            <div class="flex-1">
+              <h3 class="font-semibold text-sm mb-1">Kahve Demleme Sanatı</h3>
+              <p class="text-xs text-muted-foreground mb-1">Brew Lab</p>
+              <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                <iconify-icon icon="solar:calendar-bold" class="w-4 h-4"></iconify-icon>
+                <span>5 Ocak 2024</span>
+              </div>
+              <div class="flex items-center gap-1 text-xs text-[#22C55E] mt-1 font-medium">
+                <iconify-icon icon="solar:check-circle-bold" class="w-4 h-4"></iconify-icon>
+                <span>Tamamlandı</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-card rounded-2xl p-4 border border-border mb-3 relative overflow-hidden">
+          <div class="absolute top-3 right-3">
+            <div class="w-6 h-6 bg-[#22C55E] rounded-full flex items-center justify-center">
+              <iconify-icon icon="solar:check-circle-bold" class="w-4 h-4 text-white"></iconify-icon>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 opacity-90">
+              <img src="https://picsum.photos/seed/workshop5/200/200" alt="Event" class="w-full h-full object-cover" >
+            </div>
+            <div class="flex-1">
+              <h3 class="font-semibold text-sm mb-1">Resim Atölyesi</h3>
+              <p class="text-xs text-muted-foreground mb-1">Renk Akademi</p>
+              <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                <iconify-icon icon="solar:calendar-bold" class="w-4 h-4"></iconify-icon>
+                <span>28 Aralık 2023</span>
+              </div>
+              <div class="flex items-center gap-1 text-xs text-[#22C55E] mt-1 font-medium">
+                <iconify-icon icon="solar:check-circle-bold" class="w-4 h-4"></iconify-icon>
+                <span>Tamamlandı</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<nav class="absolute bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-border px-6 py-3 z-50">
+  <div class="flex items-center justify-around">
+    <button class="flex flex-col items-center gap-1 text-muted-foreground">
+      <iconify-icon icon="solar:home-bold" class="w-6 h-6"></iconify-icon>
+      <span class="text-xs font-medium">Ana Sayfa</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-muted-foreground">
+      <iconify-icon icon="solar:map-bold" class="w-6 h-6"></iconify-icon>
+      <span class="text-xs font-medium">Harita</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-muted-foreground">
+      <iconify-icon icon="solar:calendar-bold" class="w-6 h-6"></iconify-icon>
+      <span class="text-xs font-medium">Takvim</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-primary">
+      <iconify-icon icon="solar:user-circle-bold" class="w-6 h-6"></iconify-icon>
+      <span class="text-xs font-medium">Profil</span>
+    </button>
+  </div>
+</nav>
+  </div>
+</body>
+</html>

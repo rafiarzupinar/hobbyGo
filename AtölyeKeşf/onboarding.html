@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Onboarding</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: 'var(--background)',
+            foreground: 'var(--foreground)',
+            primary: { DEFAULT: 'var(--primary)', foreground: 'var(--primary-foreground)' },
+            secondary: { DEFAULT: 'var(--secondary)', foreground: 'var(--secondary-foreground)' },
+            muted: { DEFAULT: 'var(--muted)', foreground: 'var(--muted-foreground)' },
+            accent: { DEFAULT: 'var(--accent)', foreground: 'var(--accent-foreground)' },
+            destructive: { DEFAULT: 'var(--destructive)' },
+            card: { DEFAULT: 'var(--card)', foreground: 'var(--card-foreground)' },
+            border: 'var(--border)',
+            input: 'var(--input)',
+            ring: 'var(--ring)',
+          },
+          borderRadius: { DEFAULT: 'var(--radius)' },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    :root {
+      --background: #000000;
+      --foreground: #ffffff;
+      --primary: #10b981;
+      --primary-foreground: #ffffff;
+      --secondary: #111111;
+      --secondary-foreground: #ffffff;
+      --muted: #262626;
+      --muted-foreground: #a1a1aa;
+      --accent: #111111;
+      --accent-foreground: #ffffff;
+      --destructive: #ef4444;
+      --card: #111111;
+      --card-foreground: #ffffff;
+      --border: #262626;
+      --input: #262626;
+      --ring: #10b981;
+      --radius: 1rem;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .mobile-container {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 431px) {
+      body {
+        background: #1a1a1a;
+        padding: 20px;
+      }
+      .mobile-container {
+        border-radius: 40px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        min-height: calc(100vh - 40px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-container">
+    <div class="flex flex-col min-h-full bg-background text-foreground overflow-y-auto pb-2">
+  
+  <div class="flex-1 flex flex-col">
+    
+    <div class="flex items-center justify-between px-6 pt-4 pb-2">
+      <div class="w-12"></div>
+      <div class="flex gap-2">
+        <div class="w-8 h-1 bg-primary rounded-full"></div>
+        <div class="w-8 h-1 bg-border rounded-full"></div>
+        <div class="w-8 h-1 bg-border rounded-full"></div>
+      </div>
+      <button class="text-sm font-medium text-muted-foreground">Atla</button>
+    </div>
+
+    <div class="flex-1 flex flex-col items-center justify-center px-6 py-8">
+      
+      <div class="w-full max-w-sm mb-8">
+        <div class="relative">
+          <div class="absolute inset-0 bg-primary/10 rounded-full blur-3xl"></div>
+          <div class="relative bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-3xl p-8 aspect-square flex items-center justify-center">
+            <div class="relative">
+              <div class="absolute -top-4 -left-4 bg-card rounded-2xl p-4 shadow-lg border border-border">
+                <iconify-icon icon="solar:palette-bold" class="w-8 h-8 text-primary"></iconify-icon>
+              </div>
+              <div class="absolute -bottom-2 -right-2 bg-card rounded-2xl p-4 shadow-lg border border-border">
+                <iconify-icon icon="solar:mask-happly-bold" class="w-8 h-8 text-orange-500"></iconify-icon>
+              </div>
+              <div class="absolute top-1/2 -translate-y-1/2 -right-6 bg-card rounded-2xl p-4 shadow-lg border border-border">
+                <iconify-icon icon="solar:scissors-bold" class="w-8 h-8 text-primary"></iconify-icon>
+              </div>
+              <div class="bg-primary/10 rounded-full p-12">
+                <iconify-icon icon="solar:shop-2-bold" class="w-24 h-24 text-primary"></iconify-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center space-y-4 px-4">
+        <h1 class="text-3xl font-bold text-foreground">Şehirdeki Atölyeleri Keşfet</h1>
+        <p class="text-base text-muted-foreground leading-relaxed">
+          Çevrenizdeki yaratıcı atölyeleri keşfedin. Seramik, resim, müzik ve daha fazlası sizi bekliyor.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="px-6 pb-2 space-y-3">
+      <button class="w-full py-4 px-6 bg-primary text-white font-semibold rounded-xl shadow-lg shadow-primary/25">
+        Devam Et
+      </button>
+    </div>
+
+  </div>
+
+  <nav class="absolute bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-border px-6 py-3 z-50">
+    <div class="flex items-center justify-around">
+      <button class="flex flex-col items-center gap-1 text-primary">
+        <iconify-icon icon="solar:home-bold" class="w-6 h-6"></iconify-icon>
+        <span class="text-xs font-medium">Onboarding</span>
+      </button>
+      <button class="flex flex-col items-center gap-1 text-muted-foreground">
+        <iconify-icon icon="solar:magnifer-linear" class="w-6 h-6"></iconify-icon>
+        <span class="text-xs font-medium">Giriş Kayıt</span>
+      </button>
+      <button class="flex flex-col items-center gap-1 text-muted-foreground">
+        <iconify-icon icon="solar:heart-bold" class="w-6 h-6"></iconify-icon>
+        <span class="text-xs font-medium">Ana Sayfa</span>
+      </button>
+      <button class="flex flex-col items-center gap-1 text-muted-foreground">
+        <iconify-icon icon="solar:user-circle-bold" class="w-6 h-6"></iconify-icon>
+        <span class="text-xs font-medium">Harita</span>
+      </button>
+    </div>
+  </nav>
+
+</div>
+  </div>
+</body>
+</html>

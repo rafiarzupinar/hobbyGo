@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Takvim</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: 'var(--background)',
+            foreground: 'var(--foreground)',
+            primary: { DEFAULT: 'var(--primary)', foreground: 'var(--primary-foreground)' },
+            secondary: { DEFAULT: 'var(--secondary)', foreground: 'var(--secondary-foreground)' },
+            muted: { DEFAULT: 'var(--muted)', foreground: 'var(--muted-foreground)' },
+            accent: { DEFAULT: 'var(--accent)', foreground: 'var(--accent-foreground)' },
+            destructive: { DEFAULT: 'var(--destructive)' },
+            card: { DEFAULT: 'var(--card)', foreground: 'var(--card-foreground)' },
+            border: 'var(--border)',
+            input: 'var(--input)',
+            ring: 'var(--ring)',
+          },
+          borderRadius: { DEFAULT: 'var(--radius)' },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    :root {
+      --background: #000000;
+      --foreground: #ffffff;
+      --primary: #10b981;
+      --primary-foreground: #ffffff;
+      --secondary: #111111;
+      --secondary-foreground: #ffffff;
+      --muted: #262626;
+      --muted-foreground: #a1a1aa;
+      --accent: #111111;
+      --accent-foreground: #ffffff;
+      --destructive: #ef4444;
+      --card: #111111;
+      --card-foreground: #ffffff;
+      --border: #262626;
+      --input: #262626;
+      --ring: #10b981;
+      --radius: 1rem;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .mobile-container {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 431px) {
+      body {
+        background: #1a1a1a;
+        padding: 20px;
+      }
+      .mobile-container {
+        border-radius: 40px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        min-height: calc(100vh - 40px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-container">
+    <div class="flex flex-col min-h-full bg-background text-foreground overflow-y-auto pb-2">
+  
+  <div class="sticky top-0 bg-background z-40 px-6 pt-6 pb-4 border-b border-border">
+    <div class="flex items-center justify-between mb-4">
+      <h1 class="text-2xl font-bold">Takvim</h1>
+      <div class="flex items-center gap-2">
+        <button class="p-2 bg-muted rounded-lg">
+          <iconify-icon icon="solar:filter-bold" class="w-5 h-5"></iconify-icon>
+        </button>
+        <button class="p-2 bg-muted rounded-lg">
+          <iconify-icon icon="solar:list-bold" class="w-5 h-5"></iconify-icon>
+        </button>
+      </div>
+    </div>
+    
+    <div class="flex items-center justify-between">
+      <button class="p-2 hover:bg-muted rounded-lg">
+        <iconify-icon icon="solar:alt-arrow-left-bold" class="w-5 h-5"></iconify-icon>
+      </button>
+      <div class="text-lg font-semibold">Aralık 2024</div>
+      <button class="p-2 hover:bg-muted rounded-lg">
+        <iconify-icon icon="solar:alt-arrow-right-bold" class="w-5 h-5"></iconify-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="px-6 py-4">
+    <div class="bg-card rounded-2xl p-4 border border-border">
+      <div class="grid grid-cols-7 gap-2 mb-3">
+        <div class="text-center text-xs font-medium text-muted-foreground">Pzt</div>
+        <div class="text-center text-xs font-medium text-muted-foreground">Sal</div>
+        <div class="text-center text-xs font-medium text-muted-foreground">Çar</div>
+        <div class="text-center text-xs font-medium text-muted-foreground">Per</div>
+        <div class="text-center text-xs font-medium text-muted-foreground">Cum</div>
+        <div class="text-center text-xs font-medium text-muted-foreground">Cmt</div>
+        <div class="text-center text-xs font-medium text-muted-foreground">Paz</div>
+      </div>
+      
+      <div class="grid grid-cols-7 gap-2">
+        <div class="aspect-square"></div>
+        <div class="aspect-square"></div>
+        <div class="aspect-square"></div>
+        <div class="aspect-square"></div>
+        <div class="aspect-square"></div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">1</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">2</span>
+          <div class="flex gap-0.5 mt-1">
+            <div class="w-1 h-1 rounded-full bg-primary"></div>
+          </div>
+        </div>
+        
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">3</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">4</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">5</span>
+          <div class="flex gap-0.5 mt-1">
+            <div class="w-1 h-1 rounded-full bg-primary"></div>
+            <div class="w-1 h-1 rounded-full bg-green-500"></div>
+          </div>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">6</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">7</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">8</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">9</span>
+        </div>
+        
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">10</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">11</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">12</span>
+          <div class="flex gap-0.5 mt-1">
+            <div class="w-1 h-1 rounded-full bg-orange-500"></div>
+          </div>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">13</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">14</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg bg-primary text-white">
+          <span class="text-sm font-semibold">15</span>
+          <div class="flex gap-0.5 mt-1">
+            <div class="w-1 h-1 rounded-full bg-white"></div>
+            <div class="w-1 h-1 rounded-full bg-white"></div>
+            <div class="w-1 h-1 rounded-full bg-white"></div>
+          </div>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">16</span>
+        </div>
+        
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">17</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">18</span>
+          <div class="flex gap-0.5 mt-1">
+            <div class="w-1 h-1 rounded-full bg-primary"></div>
+          </div>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">19</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">20</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">21</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">22</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">23</span>
+        </div>
+        
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">24</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">25</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">26</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">27</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">28</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">29</span>
+        </div>
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">30</span>
+        </div>
+        
+        <div class="aspect-square flex flex-col items-center justify-center rounded-lg hover:bg-muted cursor-pointer">
+          <span class="text-sm">31</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between mt-4 mb-3">
+      <h2 class="text-lg font-semibold">15 Aralık 2024</h2>
+      <button class="text-sm text-primary font-medium">Bugün</button>
+    </div>
+
+    <div class="space-y-3">
+      <div class="bg-card rounded-2xl border border-border overflow-hidden">
+        <div class="flex gap-3 p-3">
+          <img src="https://picsum.photos/seed/event1/400/300" alt="Etkinlik" class="w-20 h-20 rounded-xl object-cover">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <h3 class="font-semibold text-sm line-clamp-1">Seramik Atölyesi: Çömlek Yapımı</h3>
+              <span class="text-xs font-medium text-primary whitespace-nowrap">14:00</span>
+            </div>
+            <p class="text-xs text-muted-foreground mb-2">Sanat Evi Atölyesi</p>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-lg font-medium">Sanat</span>
+              <span class="text-xs text-muted-foreground">2 saat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-card rounded-2xl border border-border overflow-hidden">
+        <div class="flex gap-3 p-3">
+          <img src="https://picsum.photos/seed/event2/400/300" alt="Etkinlik" class="w-20 h-20 rounded-xl object-cover">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <h3 class="font-semibold text-sm line-clamp-1">Yoga ve Meditasyon</h3>
+              <span class="text-xs font-medium text-green-600 whitespace-nowrap">17:30</span>
+            </div>
+            <p class="text-xs text-muted-foreground mb-2">Zen Merkezi</p>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-1 bg-green-500/10 text-green-600 text-xs rounded-lg font-medium">Spor</span>
+              <span class="text-xs text-muted-foreground">1.5 saat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-card rounded-2xl border border-border overflow-hidden">
+        <div class="flex gap-3 p-3">
+          <img src="https://picsum.photos/seed/event3/400/300" alt="Etkinlik" class="w-20 h-20 rounded-xl object-cover">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <h3 class="font-semibold text-sm line-clamp-1">Caz Konseri: Akşam Performansı</h3>
+              <span class="text-xs font-medium text-orange-600 whitespace-nowrap">20:00</span>
+            </div>
+            <p class="text-xs text-muted-foreground mb-2">Müzik Akademisi</p>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-1 bg-orange-500/10 text-orange-600 text-xs rounded-lg font-medium">Müzik</span>
+              <span class="text-xs text-muted-foreground">3 saat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="absolute bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-border px-6 py-3 z-50">
+    <div class="flex items-center justify-around">
+      <button class="flex flex-col items-center gap-1 text-muted-foreground">
+        <iconify-icon icon="solar:home-bold" class="w-6 h-6"></iconify-icon>
+        <span class="text-xs font-medium">Ana Sayfa</span>
+      </button>
+      <button class="flex flex-col items-center gap-1 text-muted-foreground">
+        <iconify-icon icon="solar:map-point-bold" class="w-6 h-6"></iconify-icon>
+        <span class="text-xs font-medium">Harita</span>
+      </button>
+      <button class="flex flex-col items-center gap-1 text-primary">
+        <iconify-icon icon="solar:calendar-bold" class="w-6 h-6"></iconify-icon>
+        <span class="text-xs font-medium">Takvim</span>
+      </button>
+      <button class="flex flex-col items-center gap-1 text-muted-foreground">
+        <iconify-icon icon="solar:user-circle-bold" class="w-6 h-6"></iconify-icon>
+        <span class="text-xs font-medium">Profil</span>
+      </button>
+    </div>
+  </nav>
+
+</div>
+  </div>
+</body>
+</html>
