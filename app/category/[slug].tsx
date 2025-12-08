@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { useLocalSearchParams, Stack } from 'expo-router';
+import { useLocalSearchParams, Stack, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/services/supabase';
@@ -11,6 +11,7 @@ import { Event } from '@/types';
 const colors = Colors.dark;
 
 export default function CategoryScreen() {
+  const router = useRouter();
   const { slug } = useLocalSearchParams();
 
   // Kategori bilgisini al
@@ -91,7 +92,12 @@ export default function CategoryScreen() {
           <FlatList
             data={events}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <EventCard event={item} />}
+            renderItem={({ item }) => (
+              <EventCard
+                event={item}
+                onPress={() => router.push(`/event/${item.id}`)}
+              />
+            )}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
           />
