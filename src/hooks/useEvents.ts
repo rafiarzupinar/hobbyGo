@@ -17,6 +17,14 @@ export const useEventsByCategory = (categoryId: string, limit = 20) => {
   });
 };
 
+export const useEventsByWorkshop = (workshopId: string, limit = 20) => {
+  return useQuery({
+    queryKey: ['events', 'workshop', workshopId, limit],
+    queryFn: () => eventService.listEventsByWorkshop(workshopId, limit),
+    enabled: !!workshopId,
+  });
+};
+
 export const useEvent = (eventId: string) => {
   return useQuery({
     queryKey: ['event', eventId],

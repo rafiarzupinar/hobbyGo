@@ -58,6 +58,25 @@ export const eventService = {
     return data || [];
   },
 
+  // List events by workshop
+  async listEventsByWorkshop(workshopId: string, limit = 20): Promise<Event[]> {
+    const { data, error } = await supabase
+      .from('events')
+      .select(`
+        *,
+        workshop:workshops(*),
+        category:categories(*)
+      `)
+      .eq('workshop_id', workshopId)
+      .eq('is_active', true)
+      .gte('start_date', new Date().toISOString())
+      .order('start_date', { ascending: true })
+      .limit(limit);
+
+    if (error) throw error;
+    return data || [];
+  },
+
   // Get event by ID
   async getEvent(eventId: string): Promise<Event | null> {
     const { data, error } = await supabase
