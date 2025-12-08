@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Pressable,
   Image,
   Dimensions,
   StatusBar,
@@ -104,10 +105,16 @@ export default function HomeScreen() {
               contentContainerStyle={styles.categoriesContainer}
             >
               {categories.map((category: Category) => (
-                <TouchableOpacity
+                <Pressable
                   key={category.id}
-                  style={styles.categoryItem}
-                  onPress={() => router.push(`/category/${category.slug}`)}
+                  style={({ pressed }) => [
+                    styles.categoryItem,
+                    pressed && { opacity: 0.7 }
+                  ]}
+                  onPress={() => {
+                    console.log('Category clicked:', category.slug);
+                    router.push(`/category/${category.slug}`);
+                  }}
                 >
                   <LinearGradient
                     colors={[getCategoryColors(category.slug).from, getCategoryColors(category.slug).to]}
@@ -116,7 +123,7 @@ export default function HomeScreen() {
                     <Ionicons name={category.icon as any} size={28} color="#fff" />
                   </LinearGradient>
                   <Text style={styles.categoryName}>{category.name}</Text>
-                </TouchableOpacity>
+                </Pressable>
               ))}
             </ScrollView>
           )}
