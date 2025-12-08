@@ -14,11 +14,20 @@ const resources = {
 };
 
 const initI18n = async () => {
-  let savedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
-  
-  // Default to English if no saved language
-  if (!savedLanguage) {
-    savedLanguage = 'en';
+  let savedLanguage = 'en';
+
+  // Check if we're in a browser environment
+  if (typeof window !== 'undefined') {
+    try {
+      // Use localStorage for web, AsyncStorage for native
+      if (typeof localStorage !== 'undefined') {
+        savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY) || 'en';
+      } else {
+        savedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY) || 'en';
+      }
+    } catch (error) {
+      console.log('Error loading saved language:', error);
+    }
   }
 
   i18n
@@ -35,10 +44,37 @@ const initI18n = async () => {
 };
 
 export const changeLanguage = async (language: string) => {
-  await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+  // Check if we're in a browser environment
+  if (typeof window !== 'undefined') {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+      } else {
+        await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+      }
+    } catch (error) {
+      console.log('Error saving language:', error);
+    }
+  }
   await i18n.changeLanguage(language);
 };
 
-initI18n();
+// Only init in browser/client environments
+if (typeof window !== 'undefined') {
+  initI18n();
+} else {
+  // For SSR, just initialize with default language
+  i18n
+    .use(initReactI18next)
+    .init({
+      resources,
+      lng: 'en',
+      fallbackLng: 'en',
+      compatibilityJSON: 'v3',
+      interpolation: {
+        escapeValue: false,
+      },
+    });
+}
 
 export default i18n;
