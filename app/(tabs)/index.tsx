@@ -5,13 +5,12 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Pressable,
   Image,
   Dimensions,
   StatusBar,
   ActivityIndicator,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -28,11 +27,18 @@ const colors = Colors.dark;
 
 // Category color mapping by slug
 const getCategoryColors = (slug: string) => {
+  console.log('Getting color for slug:', slug);
+
   // Return the color from CategoryColors if it exists, otherwise use a default gradient
   const categoryColor = (CategoryColors as any)[slug];
+
+  console.log('Found color:', categoryColor);
+
   if (categoryColor) {
     return categoryColor;
   }
+
+  console.warn(`No color found for slug: ${slug}, using fallback`);
 
   // Default fallback colors if slug not found
   const fallbackColors = [
@@ -104,27 +110,29 @@ export default function HomeScreen() {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.categoriesContainer}
             >
-              {categories.map((category: Category) => (
-                <Pressable
-                  key={category.id}
-                  style={({ pressed }) => [
-                    styles.categoryItem,
-                    pressed && { opacity: 0.7 }
-                  ]}
-                  onPress={() => {
-                    console.log('Category clicked:', category.slug);
-                    router.push(`/category/${category.slug}`);
-                  }}
-                >
-                  <LinearGradient
-                    colors={[getCategoryColors(category.slug).from, getCategoryColors(category.slug).to]}
-                    style={styles.categoryIcon}
+              {categories.map((category: Category) => {
+                const categoryColors = getCategoryColors(category.slug);
+                return (
+                  <Link
+                    key={category.id}
+                    href={`/category/${category.slug}`}
+                    asChild
                   >
-                    <Ionicons name={category.icon as any} size={28} color="#fff" />
-                  </LinearGradient>
-                  <Text style={styles.categoryName}>{category.name}</Text>
-                </Pressable>
-              ))}
+                    <TouchableOpacity
+                      style={styles.categoryItem}
+                      activeOpacity={0.7}
+                    >
+                      <LinearGradient
+                        colors={[categoryColors.from, categoryColors.to]}
+                        style={styles.categoryIcon}
+                      >
+                        <Ionicons name={category.icon as any} size={28} color="#fff" />
+                      </LinearGradient>
+                      <Text style={styles.categoryName}>{category.name}</Text>
+                    </TouchableOpacity>
+                  </Link>
+                );
+              })}
             </ScrollView>
           )}
         </View>
