@@ -18,6 +18,18 @@ export interface Category {
   color: string;
   description?: string;
   created_at: string;
+  subcategories?: Subcategory[]; // Joined data
+}
+
+export interface Subcategory {
+  id: string;
+  category_id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  icon?: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Workshop {
