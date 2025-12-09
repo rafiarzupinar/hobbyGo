@@ -9,7 +9,8 @@ export const eventService = {
       .select(`
         *,
         workshop:workshops(*),
-        category:categories(*)
+        category:categories(*),
+        subcategory:subcategories(*)
       `)
       .eq('is_active', true)
       .gte('start_date', new Date().toISOString())
@@ -46,7 +47,8 @@ export const eventService = {
       .select(`
         *,
         workshop:workshops(*),
-        category:categories(*)
+        category:categories(*),
+        subcategory:subcategories(*)
       `)
       .eq('category_id', categoryId)
       .eq('is_active', true)
@@ -65,7 +67,8 @@ export const eventService = {
       .select(`
         *,
         workshop:workshops(*),
-        category:categories(*)
+        category:categories(*),
+        subcategory:subcategories(*)
       `)
       .eq('workshop_id', workshopId)
       .eq('is_active', true)
@@ -84,7 +87,8 @@ export const eventService = {
       .select(`
         *,
         workshop:workshops(*),
-        category:categories(*)
+        category:categories(*),
+        subcategory:subcategories(*)
       `)
       .eq('id', eventId)
       .single();
@@ -135,7 +139,8 @@ export const eventService = {
       .select(`
         *,
         workshop:workshops(*),
-        category:categories(*)
+        category:categories(*),
+        subcategory:subcategories(*)
       `)
       .or(`title.ilike.%${query}%,description.ilike.%${query}%`)
       .eq('is_active', true)
@@ -184,7 +189,8 @@ export const eventService = {
         event:events(
           *,
           workshop:workshops(*),
-          category:categories(*)
+          category:categories(*),
+          subcategory:subcategories(*)
         )
       `)
       .eq('user_id', userId)

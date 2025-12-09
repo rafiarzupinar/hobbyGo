@@ -16,12 +16,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { useCreateWorkshop } from '@/hooks/useWorkshops';
 import { useAppSelector } from '@/store/hooks';
+import { useModalFocus } from '@/hooks/useModalFocus';
 
 const colors = Colors.dark;
 
 export default function CreateWorkshopScreen() {
   const router = useRouter();
   const { user } = useAppSelector((state) => state.auth);
+
+  // Web için modal focus yönetimi
+  useModalFocus();
 
   // Form state
   const [name, setName] = useState('');

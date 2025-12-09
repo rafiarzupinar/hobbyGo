@@ -21,6 +21,7 @@ import { useCreateEvent } from '@/hooks/useEvents';
 import { useAppSelector } from '@/store/hooks';
 import { Category, Workshop } from '@/types';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useModalFocus } from '@/hooks/useModalFocus';
 
 const colors = Colors.dark;
 
@@ -34,6 +35,9 @@ const levels = [
 export default function CreateEventScreen() {
   const router = useRouter();
   const { user } = useAppSelector((state) => state.auth);
+
+  // Web için modal focus yönetimi
+  useModalFocus();
 
   // Form state
   const [title, setTitle] = useState('');
