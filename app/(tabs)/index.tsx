@@ -9,7 +9,6 @@ import {
   Dimensions,
   StatusBar,
   ActivityIndicator,
-  Platform,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -62,14 +61,7 @@ export default function HomeScreen() {
 
   const navigateToCategory = (slug: string) => {
     console.log('Navigating to category:', slug);
-
-    if (Platform.OS === 'web') {
-      // Web'de window.location kullan
-      window.location.href = `/category/${slug}`;
-    } else {
-      // Native'de router.push kullan
-      router.push(`/category/${slug}`);
-    }
+    router.push(`/category/${slug}` as any);
   };
 
   // Fetch data from Supabase
