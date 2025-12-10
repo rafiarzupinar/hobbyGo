@@ -9,6 +9,7 @@ import {
   Dimensions,
   StatusBar,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -58,6 +59,18 @@ const getCategoryColors = (slug: string) => {
 export default function HomeScreen() {
   const router = useRouter();
   const [selectedLocation] = useState('İstanbul, Kadıköy');
+
+  const navigateToCategory = (slug: string) => {
+    console.log('Navigating to category:', slug);
+
+    if (Platform.OS === 'web') {
+      // Web'de window.location kullan
+      window.location.href = `/category/${slug}`;
+    } else {
+      // Native'de router.push kullan
+      router.push(`/category/${slug}`);
+    }
+  };
 
   // Fetch data from Supabase
   const { data: categories = [], isLoading: categoriesLoading } = useCategories();
@@ -117,7 +130,7 @@ export default function HomeScreen() {
                     key={category.id}
                     style={styles.categoryItem}
                     activeOpacity={0.7}
-                    onPress={() => router.push(`/category/${category.slug}`)}
+                    onPress={() => navigateToCategory(category.slug)}
                   >
                     <LinearGradient
                       colors={[categoryColors.from, categoryColors.to]}

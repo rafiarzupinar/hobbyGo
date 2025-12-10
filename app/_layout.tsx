@@ -115,7 +115,7 @@ function RootLayoutNav() {
     const currentSegment = segments[0] as string;
 
     // Always redirect to main app on launch
-    if (!inAuthGroup && currentSegment !== 'event' && currentSegment !== 'workshop' && currentSegment !== 'create-event' && currentSegment !== 'create-workshop') {
+    if (!inAuthGroup && currentSegment !== 'event' && currentSegment !== 'workshop' && currentSegment !== 'category' && currentSegment !== 'create-event' && currentSegment !== 'create-workshop') {
       router.replace('/(tabs)');
     }
 
@@ -148,6 +148,7 @@ function RootLayoutNav() {
         <Stack.Screen name="register" />
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+        <Stack.Screen name="category/[slug]" options={{ presentation: 'card' }} />
         <Stack.Screen name="event/[id]" options={{ presentation: 'card' }} />
         <Stack.Screen name="workshop/[id]" options={{ presentation: 'card' }} />
         <Stack.Screen name="create-event" options={{ presentation: 'modal' }} />
