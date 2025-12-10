@@ -10,7 +10,7 @@ import {
   StatusBar,
   ActivityIndicator,
 } from 'react-native';
-import { useRouter, Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -113,24 +113,20 @@ export default function HomeScreen() {
               {categories.map((category: Category) => {
                 const categoryColors = getCategoryColors(category.slug);
                 return (
-                  <Link
+                  <TouchableOpacity
                     key={category.id}
-                    href={`/category/${category.slug}`}
-                    asChild
+                    style={styles.categoryItem}
+                    activeOpacity={0.7}
+                    onPress={() => router.push(`/category/${category.slug}`)}
                   >
-                    <TouchableOpacity
-                      style={styles.categoryItem}
-                      activeOpacity={0.7}
+                    <LinearGradient
+                      colors={[categoryColors.from, categoryColors.to]}
+                      style={styles.categoryIcon}
                     >
-                      <LinearGradient
-                        colors={[categoryColors.from, categoryColors.to]}
-                        style={styles.categoryIcon}
-                      >
-                        <Ionicons name={category.icon as any} size={28} color="#fff" />
-                      </LinearGradient>
-                      <Text style={styles.categoryName}>{category.name}</Text>
-                    </TouchableOpacity>
-                  </Link>
+                      <Ionicons name={category.icon as any} size={28} color="#fff" />
+                    </LinearGradient>
+                    <Text style={styles.categoryName}>{category.name}</Text>
+                  </TouchableOpacity>
                 );
               })}
             </ScrollView>
