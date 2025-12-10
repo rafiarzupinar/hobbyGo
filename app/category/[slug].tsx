@@ -11,24 +11,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 const colors = Colors.dark;
 
-// Static export için tüm kategori slug'larını oluştur
-export async function generateStaticParams() {
-  try {
-    const { data: categories } = await supabase
-      .from('categories')
-      .select('slug');
-
-    if (!categories) return [];
-
-    return categories.map((category) => ({
-      slug: category.slug,
-    }));
-  } catch (error) {
-    console.error('Error generating static params:', error);
-    return [];
-  }
-}
-
 export default function CategoryScreen() {
   const router = useRouter();
   const { slug } = useLocalSearchParams();
