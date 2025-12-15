@@ -291,8 +291,8 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
   },
   subcategoriesContainer: {
-    paddingHorizontal: Spacing.lg,
-    gap: Spacing.sm,
+    paddingLeft: Spacing.lg,
+    paddingRight: Spacing.lg,
   },
   subcategoryChip: {
     paddingHorizontal: Spacing.lg,
@@ -301,6 +301,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.card,
     borderWidth: 1,
     borderColor: colors.border,
+    marginRight: Spacing.sm,
   },
   subcategoryChipActive: {
     backgroundColor: colors.primary,
