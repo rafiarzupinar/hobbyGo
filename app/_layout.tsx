@@ -1,4 +1,4 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider as NavigationThemeProvider } from '@react-navigation/native';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
@@ -8,7 +8,7 @@ import { View, ActivityIndicator } from 'react-native';
 import 'react-native-reanimated';
 import '@/locales/i18n';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 import { store } from '@/store';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { setAuth, logout } from '@/store/slices/authSlice';
@@ -23,7 +23,7 @@ export const unstable_settings = {
 };
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const { theme, colors } = useTheme();
   const segments = useSegments();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -131,14 +131,14 @@ function RootLayoutNav() {
   // Show loading screen while restoring session
   if (isLoading) {
     return (
-      <View style={{ flex: 1, backgroundColor: Colors.dark.background, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator size="large" color={Colors.dark.primary} />
+      <View style={{ flex: 1, backgroundColor: colors.background, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationThemeProvider value={theme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack
         screenOptions={{
           headerShown: false,
@@ -154,8 +154,8 @@ function RootLayoutNav() {
         <Stack.Screen name="create-event" options={{ presentation: 'modal' }} />
         <Stack.Screen name="create-workshop" options={{ presentation: 'modal' }} />
       </Stack>
-      <StatusBar style="light" />
-    </ThemeProvider>
+      <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
+    </NavigationThemeProvider>
   );
 }
 
@@ -163,7 +163,9 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <RootLayoutNav />
+        <ThemeProvider>
+          <RootLayoutNav />
+        </ThemeProvider>
       </QueryClientProvider>
     </Provider>
   );

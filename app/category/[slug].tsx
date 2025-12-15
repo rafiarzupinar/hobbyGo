@@ -16,15 +16,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useCategories } from '@/hooks/useCategories';
 import { useSubcategories } from '@/hooks/useSubcategories';
 import { useEvents } from '@/hooks/useEvents';
-import { Colors, CategoryColors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
+import { useTheme } from '@/contexts/ThemeContext';
+import { CategoryColors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
 import type { Event } from '@/types';
 
 const { width } = Dimensions.get('window');
-const colors = Colors.dark;
 
 export default function CategoryScreen() {
+  const { colors } = useTheme();
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const router = useRouter();
   const [selectedSubcategoryId, setSelectedSubcategoryId] = useState<string | null>(null);

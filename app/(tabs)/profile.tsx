@@ -8,6 +8,7 @@ import {
   Image,
   StatusBar,
   ActivityIndicator,
+  Switch,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,18 +17,18 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { logout } from '@/store/slices/authSlice';
 import { authService } from '@/services/authService';
-import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
+import { useTheme } from '@/contexts/ThemeContext';
+import { Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { useUserBookings } from '@/hooks/useEvents';
 import { useFavorites } from '@/hooks/useFavorites';
 import { EventBooking, Favorite } from '@/types';
 import { format, parseISO, isPast } from 'date-fns';
 import { tr } from 'date-fns/locale';
 
-const colors = Colors.dark;
-
 type TabType = 'events' | 'favorites' | 'settings';
 
 export default function ProfileScreen() {
+  const { theme, colors, toggleTheme } = useTheme();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
@@ -339,6 +340,21 @@ export default function ProfileScreen() {
                   </TouchableOpacity>
                 </>
               )}
+
+              <View style={styles.settingsItem}>
+                <View style={styles.settingsItemLeft}>
+                  <Ionicons name={theme === 'dark' ? 'moon' : 'sunny'} size={20} color={colors.foreground} />
+                  <Text style={styles.settingsItemText}>
+                    {theme === 'dark' ? 'Koyu Tema' : 'Açık Tema'}
+                  </Text>
+                </View>
+                <Switch
+                  value={theme === 'dark'}
+                  onValueChange={toggleTheme}
+                  trackColor={{ false: '#d1d5db', true: colors.primary }}
+                  thumbColor="#fff"
+                />
+              </View>
 
               <TouchableOpacity style={styles.settingsItem}>
                 <View style={styles.settingsItemLeft}>
