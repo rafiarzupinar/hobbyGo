@@ -127,22 +127,27 @@ export default function CategoryScreen() {
           ) : subcategories.length > 0 ? (
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Alt Kategoriler</Text>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.subcategoriesContainer}
-              >
+              <View style={styles.subcategoriesGrid}>
                 <TouchableOpacity
-                  style={[
-                    styles.subcategoryChip,
-                    !selectedSubcategoryId && styles.subcategoryChipActive,
-                  ]}
+                  style={styles.subcategoryGridItem}
                   onPress={() => setSelectedSubcategoryId(null)}
                 >
+                  <View
+                    style={[
+                      styles.subcategoryCircle,
+                      !selectedSubcategoryId && styles.subcategoryCircleActive,
+                    ]}
+                  >
+                    <Ionicons
+                      name="grid-outline"
+                      size={32}
+                      color={!selectedSubcategoryId ? '#fff' : colors.mutedForeground}
+                    />
+                  </View>
                   <Text
                     style={[
-                      styles.subcategoryChipText,
-                      !selectedSubcategoryId && styles.subcategoryChipTextActive,
+                      styles.subcategoryName,
+                      !selectedSubcategoryId && styles.subcategoryNameActive,
                     ]}
                   >
                     Tümü
@@ -151,24 +156,39 @@ export default function CategoryScreen() {
                 {subcategories.map((subcategory) => (
                   <TouchableOpacity
                     key={subcategory.id}
-                    style={[
-                      styles.subcategoryChip,
-                      selectedSubcategoryId === subcategory.id && styles.subcategoryChipActive,
-                    ]}
+                    style={styles.subcategoryGridItem}
                     onPress={() => setSelectedSubcategoryId(subcategory.id)}
                   >
+                    <View
+                      style={[
+                        styles.subcategoryCircle,
+                        selectedSubcategoryId === subcategory.id &&
+                          styles.subcategoryCircleActive,
+                      ]}
+                    >
+                      <Ionicons
+                        name={(subcategory.icon as any) || 'apps-outline'}
+                        size={32}
+                        color={
+                          selectedSubcategoryId === subcategory.id
+                            ? '#fff'
+                            : colors.mutedForeground
+                        }
+                      />
+                    </View>
                     <Text
                       style={[
-                        styles.subcategoryChipText,
+                        styles.subcategoryName,
                         selectedSubcategoryId === subcategory.id &&
-                          styles.subcategoryChipTextActive,
+                          styles.subcategoryNameActive,
                       ]}
+                      numberOfLines={2}
                     >
                       {subcategory.name}
                     </Text>
                   </TouchableOpacity>
                 ))}
-              </ScrollView>
+              </View>
             </View>
           ) : null}
 
@@ -290,30 +310,41 @@ const styles = StyleSheet.create({
     marginHorizontal: Spacing.lg,
     marginBottom: Spacing.md,
   },
-  subcategoriesContainer: {
-    paddingLeft: Spacing.lg,
-    paddingRight: Spacing.lg,
-  },
-  subcategoryChip: {
+  subcategoriesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.sm,
-    borderRadius: BorderRadius.full,
-    backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.border,
-    marginRight: Spacing.sm,
+    gap: Spacing.md,
   },
-  subcategoryChipActive: {
+  subcategoryGridItem: {
+    width: (width - Spacing.lg * 2 - Spacing.md * 2) / 3,
+    alignItems: 'center',
+    marginBottom: Spacing.md,
+  },
+  subcategoryCircle: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: colors.card,
+    borderWidth: 2,
+    borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: Spacing.xs,
+  },
+  subcategoryCircleActive: {
     backgroundColor: colors.primary,
     borderColor: colors.primary,
   },
-  subcategoryChipText: {
-    fontSize: FontSizes.sm,
+  subcategoryName: {
+    fontSize: FontSizes.xs,
     color: colors.foreground,
+    textAlign: 'center',
     fontWeight: '500',
   },
-  subcategoryChipTextActive: {
-    color: '#fff',
+  subcategoryNameActive: {
+    color: colors.primary,
+    fontWeight: '600',
   },
   loader: {
     marginVertical: Spacing.xl,
