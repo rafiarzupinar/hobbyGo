@@ -32,7 +32,7 @@ export default function CategoryScreen() {
   // Fetch data
   const { data: categories = [] } = useCategories();
   const { data: subcategories = [], isLoading: subcategoriesLoading } = useSubcategories(slug);
-  const { data: allEvents = [], isLoading: eventsLoading } = useEvents();
+  const { data: allEvents = [], isLoading: eventsLoading } = useEvents(1000); // Fetch more events
 
   // Find current category
   const category = categories.find((cat) => cat.slug === slug);

@@ -52,18 +52,37 @@ ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 -- Public read access
 CREATE POLICY "Categories are viewable by everyone"
   ON categories FOR SELECT USING (true);
-
--- Sample Data
-INSERT INTO categories (name, slug, icon, color, description) VALUES
-  ('Seramik', 'seramik', 'palette-bold', '#a855f7', 'Çömlek ve seramik çalışmaları'),
-  ('Resim', 'resim', 'palette-2-bold', '#ec4899', 'Yağlı boya, akrilik ve suluboya'),
-  ('Müzik', 'muzik', 'music-note-bold', '#3b82f6', 'Enstrüman dersleri ve müzik atölyeleri'),
-  ('Dans', 'dans', 'mask-happly-bold', '#f97316', 'Modern dans, bale ve halk dansları'),
-  ('El Sanatları', 'el-sanatlari', 'hand-heart-bold', '#10b981', 'Örgü, nakış ve el işleri'),
-  ('Fotoğraf', 'fotograf', 'camera-bold', '#eab308', 'Fotoğrafçılık teknikleri ve düzenleme');
 ```
 
-### 3. workshops
+### 3. subcategories
+Subcategories for organizing events within categories
+
+```sql
+CREATE TABLE subcategories (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  category_id UUID REFERENCES categories(id) ON DELETE CASCADE NOT NULL,
+  name TEXT NOT NULL,
+  slug TEXT NOT NULL UNIQUE,
+  icon TEXT,
+  description TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+
+  CONSTRAINT unique_category_subcategory UNIQUE(category_id, slug)
+);
+
+-- Enable RLS
+ALTER TABLE subcategories ENABLE ROW LEVEL SECURITY;
+
+-- Public read access
+CREATE POLICY "Subcategories are viewable by everyone"
+  ON subcategories FOR SELECT USING (true);
+
+-- Indexes
+CREATE INDEX idx_subcategories_category ON subcategories(category_id);
+CREATE INDEX idx_subcategories_slug ON subcategories(slug);
+```
+
+### 4. workshops
 Workshop/Studio information
 
 ```sql
@@ -104,7 +123,7 @@ CREATE INDEX idx_workshops_location ON workshops USING GIST (
 );
 ```
 
-### 4. events
+### 5. events
 Workshop events and classes
 
 ```sql
@@ -112,6 +131,7 @@ CREATE TABLE events (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   workshop_id UUID REFERENCES workshops(id) ON DELETE CASCADE NOT NULL,
   category_id UUID REFERENCES categories(id) ON DELETE SET NULL,
+  subcategory_id UUID REFERENCES subcategories(id) ON DELETE SET NULL,
   title TEXT NOT NULL,
   description TEXT NOT NULL,
   image_url TEXT,
@@ -149,10 +169,11 @@ CREATE POLICY "Workshop owners can manage their events"
 -- Indexes
 CREATE INDEX idx_events_workshop ON events(workshop_id);
 CREATE INDEX idx_events_category ON events(category_id);
+CREATE INDEX idx_events_subcategory ON events(subcategory_id);
 CREATE INDEX idx_events_dates ON events(start_date, end_date);
 ```
 
-### 5. event_bookings
+### 6. event_bookings
 User bookings for events
 
 ```sql
@@ -202,7 +223,7 @@ CREATE INDEX idx_bookings_event ON event_bookings(event_id);
 CREATE INDEX idx_bookings_user ON event_bookings(user_id);
 ```
 
-### 6. favorites
+### 7. favorites
 User favorite workshops
 
 ```sql
@@ -229,7 +250,7 @@ CREATE POLICY "Users can manage their favorites"
 CREATE INDEX idx_favorites_user ON favorites(user_id);
 ```
 
-### 7. notifications
+### 8. notifications
 Push notifications and in-app alerts
 
 ```sql
@@ -261,7 +282,7 @@ CREATE INDEX idx_notifications_user ON notifications(user_id, created_at DESC);
 CREATE INDEX idx_notifications_unread ON notifications(user_id, is_read) WHERE is_read = false;
 ```
 
-### 8. reviews
+### 9. reviews
 Workshop reviews and ratings
 
 ```sql
