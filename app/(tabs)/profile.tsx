@@ -20,7 +20,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { logout } from '@/store/slices/authSlice';
 import { authService } from '@/services/authService';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Spacing, BorderRadius, FontSizes } from '@/constants/theme';
+import { Spacing, BorderRadius, FontSizes, Colors } from '@/constants/theme';
 import { useUserBookings } from '@/hooks/useEvents';
 import { useFavorites } from '@/hooks/useFavorites';
 import { EventBooking, Favorite } from '@/types';
@@ -367,7 +367,7 @@ export default function ProfileScreen() {
                   >
                     <View style={styles.settingsItemLeft}>
                       <Ionicons name="add-circle-outline" size={20} color={colors.primary} />
-                      <Text style={[styles.settingsItemText, { color: colors.primary }]}>
+                      <Text style={[styles.settingsItemText, { color: staticColors.primary }]}>
                         Yeni Atölye Ekle
                       </Text>
                     </View>
@@ -379,7 +379,7 @@ export default function ProfileScreen() {
                   >
                     <View style={styles.settingsItemLeft}>
                       <Ionicons name="calendar-outline" size={20} color={colors.primary} />
-                      <Text style={[styles.settingsItemText, { color: colors.primary }]}>
+                      <Text style={[styles.settingsItemText, { color: staticColors.primary }]}>
                         Yeni Etkinlik Ekle
                       </Text>
                     </View>
@@ -434,7 +434,7 @@ export default function ProfileScreen() {
               <TouchableOpacity style={[styles.settingsItem, styles.logoutItem]} onPress={handleLogout}>
                 <View style={styles.settingsItemLeft}>
                   <Ionicons name="log-out-outline" size={20} color={colors.destructive} />
-                  <Text style={[styles.settingsItemText, { color: colors.destructive }]}>
+                  <Text style={[styles.settingsItemText, { color: staticColors.destructive }]}>
                     Çıkış Yap
                   </Text>
                 </View>
@@ -450,10 +450,13 @@ export default function ProfileScreen() {
   );
 }
 
+// Static colors for StyleSheet
+const staticColors = Colors.dark;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: staticColors.background,
   },
   profileHeader: {
     paddingHorizontal: Spacing.lg,
@@ -540,7 +543,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: staticColors.background,
     marginTop: -Spacing.lg,
     borderTopLeftRadius: BorderRadius['2xl'],
     borderTopRightRadius: BorderRadius['2xl'],
@@ -548,7 +551,7 @@ const styles = StyleSheet.create({
   tabsContainer: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: staticColors.border,
     paddingHorizontal: Spacing.sm,
   },
   tab: {
@@ -558,15 +561,15 @@ const styles = StyleSheet.create({
   },
   tabActive: {
     borderBottomWidth: 2,
-    borderBottomColor: colors.primary,
+    borderBottomColor: staticColors.primary,
   },
   tabText: {
     fontSize: FontSizes.sm,
     fontWeight: '600',
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
   },
   tabTextActive: {
-    color: colors.primary,
+    color: staticColors.primary,
   },
   scrollView: {
     flex: 1,
@@ -581,27 +584,27 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: FontSizes.md,
     fontWeight: '600',
-    color: colors.foreground,
+    color: staticColors.foreground,
     marginBottom: Spacing.md,
   },
   emptySection: {
-    backgroundColor: colors.card,
+    backgroundColor: staticColors.card,
     borderRadius: BorderRadius.lg,
     padding: Spacing.lg,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: staticColors.border,
   },
   emptySectionText: {
     fontSize: FontSizes.sm,
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
   },
   eventCard: {
-    backgroundColor: colors.card,
+    backgroundColor: staticColors.card,
     borderRadius: BorderRadius.xl,
     padding: Spacing.lg,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: staticColors.border,
     marginBottom: Spacing.md,
     position: 'relative',
     overflow: 'hidden',
@@ -621,12 +624,12 @@ const styles = StyleSheet.create({
   eventTitle: {
     fontSize: FontSizes.sm,
     fontWeight: '600',
-    color: colors.foreground,
+    color: staticColors.foreground,
     marginBottom: Spacing.xs,
   },
   eventLocation: {
     fontSize: FontSizes.xs,
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
     marginBottom: Spacing.xs,
   },
   eventDateRow: {
@@ -636,10 +639,10 @@ const styles = StyleSheet.create({
   },
   eventDate: {
     fontSize: FontSizes.xs,
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
   },
   qrButton: {
-    backgroundColor: colors.primary + '1A',
+    backgroundColor: staticColors.primary + '1A',
     borderRadius: BorderRadius.sm,
     padding: Spacing.sm,
     height: 36,
@@ -655,7 +658,7 @@ const styles = StyleSheet.create({
   },
   bookingInfoText: {
     fontSize: FontSizes.xs,
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
   },
   statusBadge: {
     paddingHorizontal: Spacing.sm,
@@ -696,7 +699,7 @@ const styles = StyleSheet.create({
   },
   emptyStateText: {
     fontSize: FontSizes.sm,
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
     marginTop: Spacing.md,
   },
   favoritesGrid: {
@@ -706,11 +709,11 @@ const styles = StyleSheet.create({
   },
   favoriteCard: {
     width: '47%',
-    backgroundColor: colors.card,
+    backgroundColor: staticColors.card,
     borderRadius: BorderRadius.lg,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: staticColors.border,
   },
   favoriteImage: {
     width: '100%',
@@ -722,7 +725,7 @@ const styles = StyleSheet.create({
   favoriteName: {
     fontSize: FontSizes.sm,
     fontWeight: '600',
-    color: colors.foreground,
+    color: staticColors.foreground,
     marginBottom: Spacing.xs,
   },
   favoriteRating: {
@@ -732,7 +735,7 @@ const styles = StyleSheet.create({
   },
   favoriteRatingText: {
     fontSize: FontSizes.xs,
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
   },
   heartButton: {
     position: 'absolute',
@@ -749,12 +752,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: colors.card,
+    backgroundColor: staticColors.card,
     borderRadius: BorderRadius.lg,
     padding: Spacing.lg,
     marginBottom: Spacing.sm,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: staticColors.border,
   },
   settingsItemLeft: {
     flexDirection: 'row',
@@ -763,11 +766,11 @@ const styles = StyleSheet.create({
   },
   settingsItemText: {
     fontSize: FontSizes.sm,
-    color: colors.foreground,
+    color: staticColors.foreground,
     fontWeight: '500',
   },
   logoutItem: {
     marginTop: Spacing.lg,
-    borderColor: colors.destructive + '33',
+    borderColor: staticColors.destructive + '33',
   },
 });
