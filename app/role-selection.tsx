@@ -50,7 +50,7 @@ export default function RoleSelectionScreen() {
         {/* Header */}
         <View style={styles.header}>
           <Image
-            source={require('@/assets/images/icon.png')}
+            source={require('../assets/images/icon.png')}
             style={styles.logo}
           />
           <Text style={[styles.title, { color: colors.foreground }]}>
