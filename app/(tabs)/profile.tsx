@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { logout } from '@/store/slices/authSlice';
 import { authService } from '@/services/authService';
@@ -25,7 +26,10 @@ import { EventBooking, Favorite } from '@/types';
 import { format, parseISO, isPast } from 'date-fns';
 import { tr } from 'date-fns/locale';
 
+const USER_TYPE_KEY = '@hobbygo_user_type';
+
 type TabType = 'events' | 'favorites' | 'settings';
+type UserType = 'user' | 'workshop_owner';
 
 export default function ProfileScreen() {
   const { theme, colors, toggleTheme } = useTheme();
@@ -33,10 +37,26 @@ export default function ProfileScreen() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const [activeTab, setActiveTab] = useState<TabType>('events');
+  const [userType, setUserType] = useState<UserType>('user');
 
   // Fetch user bookings and favorites
   const { data: bookings = [], isLoading: bookingsLoading } = useUserBookings(user?.id || '');
   const { data: favorites = [], isLoading: favoritesLoading } = useFavorites(user?.id || '');
+
+  // Load user type from storage
+  useEffect(() => {
+    const loadUserType = async () => {
+      try {
+        const savedUserType = await AsyncStorage.getItem(USER_TYPE_KEY);
+        if (savedUserType === 'user' || savedUserType === 'workshop_owner') {
+          setUserType(savedUserType);
+        }
+      } catch (error) {
+        console.error('Error loading user type:', error);
+      }
+    };
+    loadUserType();
+  }, []);
 
   // Separate upcoming and past events
   const upcomingBookings = bookings.filter((b: EventBooking) =>
@@ -45,6 +65,10 @@ export default function ProfileScreen() {
   const pastBookings = bookings.filter((b: EventBooking) =>
     b.event && isPast(parseISO(b.event.start_date))
   );
+
+  const changeRole = async () => {
+    router.push('/role-selection');
+  };
 
   const handleLogout = async () => {
     try {
@@ -85,9 +109,11 @@ export default function ProfileScreen() {
                 />
               </View>
               <View style={styles.userInfo}>
-                <Text style={styles.userName}>{user?.full_name || 'Kullanıcı'}</Text>
-                <Text style={styles.userEmail}>{user?.email || ''}</Text>
-                {user?.user_type === 'workshop_owner' && (
+                <Text style={styles.userName}>
+                  {userType === 'workshop_owner' ? 'Atölye Sahibi' : 'Kullanıcı'}
+                </Text>
+                <Text style={styles.userEmail}>demo@hobbygo.com</Text>
+                {userType === 'workshop_owner' && (
                   <View style={styles.ownerBadge}>
                     <Ionicons name="storefront" size={12} color="#fff" />
                     <Text style={styles.ownerBadgeText}>Atölye Sahibi</Text>
@@ -311,8 +337,18 @@ export default function ProfileScreen() {
                 <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
               </TouchableOpacity>
 
+              <TouchableOpacity style={styles.settingsItem} onPress={changeRole}>
+                <View style={styles.settingsItemLeft}>
+                  <Ionicons name="swap-horizontal" size={20} color={colors.foreground} />
+                  <Text style={styles.settingsItemText}>
+                    Rol Değiştir ({userType === 'workshop_owner' ? 'Atölye Sahibi' : 'Kullanıcı'})
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
+              </TouchableOpacity>
+
               {/* Workshop owner can add new workshop/event */}
-              {user?.user_type === 'workshop_owner' && (
+              {userType === 'workshop_owner' && (
                 <>
                   <TouchableOpacity
                     style={styles.settingsItem}

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { View, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import 'react-native-reanimated';
 import '@/locales/i18n';
 
@@ -15,6 +16,8 @@ import { setAuth, logout } from '@/store/slices/authSlice';
 import { supabase } from '@/services/supabase';
 import { authService } from '@/services/authService';
 import { Colors } from '@/constants/theme';
+
+const USER_TYPE_KEY = '@hobbygo_user_type';
 
 const queryClient = new QueryClient();
 
@@ -29,104 +32,42 @@ function RootLayoutNav() {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState(true);
+  const [userType, setUserType] = useState<string | null>(null);
 
-  // Restore session on app start
+  // Load user type from storage on app start
   useEffect(() => {
-    const restoreSession = async () => {
+    const loadUserType = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
-
-        if (session?.user) {
-          // Get user profile from database
-          try {
-            const userProfile = await authService.getUserProfile(session.user.id);
-            dispatch(setAuth({
-              user: userProfile as any,
-              session: session,
-            }));
-          } catch (profileError) {
-            // If profile doesn't exist or can't be fetched, use basic user info
-            console.log('Could not fetch profile, using basic info:', profileError);
-            dispatch(setAuth({
-              user: {
-                id: session.user.id,
-                email: session.user.email!,
-                full_name: session.user.user_metadata?.full_name || session.user.email,
-                user_type: 'user',
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
-              } as any,
-              session: session,
-            }));
-          }
-        }
+        const savedUserType = await AsyncStorage.getItem(USER_TYPE_KEY);
+        setUserType(savedUserType);
       } catch (error) {
-        console.error('Session restore error:', error);
+        console.error('Error loading user type:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    restoreSession();
-
-    // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (event === 'SIGNED_IN' && session?.user) {
-          try {
-            const userProfile = await authService.getUserProfile(session.user.id);
-            dispatch(setAuth({
-              user: userProfile as any,
-              session: session,
-            }));
-          } catch (profileError) {
-            // If profile doesn't exist or can't be fetched, use basic user info
-            console.log('Could not fetch profile on sign in, using basic info');
-            dispatch(setAuth({
-              user: {
-                id: session.user.id,
-                email: session.user.email!,
-                full_name: session.user.user_metadata?.full_name || session.user.email,
-                user_type: 'user',
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
-              } as any,
-              session: session,
-            }));
-          }
-        } else if (event === 'SIGNED_OUT') {
-          dispatch(logout());
-        }
-      }
-    );
-
-    return () => {
-      subscription.unsubscribe();
-    };
+    loadUserType();
   }, []);
 
-  // Handle navigation based on auth state
+  // Handle navigation based on user role selection
   useEffect(() => {
     if (isLoading) return;
 
-    // TEMPORARILY DISABLED: Skip authentication for demo purposes
-    // Users will be redirected directly to the main app
-    const inAuthGroup = segments[0] === '(tabs)';
     const currentSegment = segments[0] as string;
+    const inTabs = currentSegment === '(tabs)';
+    const inRoleSelection = currentSegment === 'role-selection';
+    const inDetailPages = ['event', 'workshop', 'category', 'create-event', 'create-workshop'].includes(currentSegment);
 
-    // Always redirect to main app on launch
-    if (!inAuthGroup && currentSegment !== 'event' && currentSegment !== 'workshop' && currentSegment !== 'category' && currentSegment !== 'create-event' && currentSegment !== 'create-workshop') {
+    // If no user type selected, redirect to role selection
+    if (!userType && !inRoleSelection && !inDetailPages) {
+      router.replace('/role-selection');
+    }
+    // If user type selected but not in tabs, go to tabs
+    else if (userType && !inTabs && !inRoleSelection && !inDetailPages) {
       router.replace('/(tabs)');
     }
-
-    /* ORIGINAL AUTH CODE - COMMENTED OUT FOR DEMO
-    if (!isAuthenticated && (inAuthGroup || inCreatePages)) {
-      router.replace('/login');
-    } else if (isAuthenticated && !inAuthGroup && currentSegment !== 'register' && currentSegment !== 'event' && currentSegment !== 'workshop' && !inCreatePages) {
-      router.replace('/(tabs)');
-    }
-    */
-  }, [segments, isLoading]);
+  }, [segments, isLoading, userType]);
 
   // Show loading screen while restoring session
   if (isLoading) {
@@ -144,8 +85,7 @@ function RootLayoutNav() {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="login" />
-        <Stack.Screen name="register" />
+        <Stack.Screen name="role-selection" />
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
         <Stack.Screen name="category/[slug]" options={{ presentation: 'card' }} />
