@@ -9,6 +9,7 @@ import {
   StatusBar,
   ActivityIndicator,
   Switch,
+  Platform,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -27,6 +28,16 @@ import { format, parseISO, isPast } from 'date-fns';
 import { tr } from 'date-fns/locale';
 
 const USER_TYPE_KEY = '@hobbygo_user_type';
+
+// Storage wrapper for web/native compatibility
+const storage = {
+  async getItem(key: string): Promise<string | null> {
+    if (Platform.OS === 'web') {
+      return localStorage.getItem(key);
+    }
+    return AsyncStorage.getItem(key);
+  },
+};
 
 type TabType = 'events' | 'favorites' | 'settings';
 type UserType = 'user' | 'workshop_owner';
@@ -47,7 +58,7 @@ export default function ProfileScreen() {
   useEffect(() => {
     const loadUserType = async () => {
       try {
-        const savedUserType = await AsyncStorage.getItem(USER_TYPE_KEY);
+        const savedUserType = await storage.getItem(USER_TYPE_KEY);
         if (savedUserType === 'user' || savedUserType === 'workshop_owner') {
           setUserType(savedUserType);
         }

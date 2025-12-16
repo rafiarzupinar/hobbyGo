@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import 'react-native-reanimated';
 import '@/locales/i18n';
@@ -18,6 +18,23 @@ import { authService } from '@/services/authService';
 import { Colors } from '@/constants/theme';
 
 const USER_TYPE_KEY = '@hobbygo_user_type';
+
+// Storage wrapper for web/native compatibility
+const storage = {
+  async getItem(key: string): Promise<string | null> {
+    if (Platform.OS === 'web') {
+      return localStorage.getItem(key);
+    }
+    return AsyncStorage.getItem(key);
+  },
+  async setItem(key: string, value: string): Promise<void> {
+    if (Platform.OS === 'web') {
+      localStorage.setItem(key, value);
+      return;
+    }
+    return AsyncStorage.setItem(key, value);
+  },
+};
 
 const queryClient = new QueryClient();
 
@@ -38,7 +55,7 @@ function RootLayoutNav() {
   useEffect(() => {
     const loadUserType = async () => {
       try {
-        const savedUserType = await AsyncStorage.getItem(USER_TYPE_KEY);
+        const savedUserType = await storage.getItem(USER_TYPE_KEY);
         setUserType(savedUserType);
       } catch (error) {
         console.error('Error loading user type:', error);

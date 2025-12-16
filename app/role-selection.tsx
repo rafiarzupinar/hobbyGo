@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  Platform,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -19,13 +20,24 @@ const { width, height } = Dimensions.get('window');
 
 const USER_TYPE_KEY = '@hobbygo_user_type';
 
+// Storage wrapper for web/native compatibility
+const storage = {
+  async setItem(key: string, value: string): Promise<void> {
+    if (Platform.OS === 'web') {
+      localStorage.setItem(key, value);
+      return;
+    }
+    return AsyncStorage.setItem(key, value);
+  },
+};
+
 export default function RoleSelectionScreen() {
   const { colors } = useTheme();
   const router = useRouter();
 
   const selectRole = async (role: 'user' | 'workshop_owner') => {
     try {
-      await AsyncStorage.setItem(USER_TYPE_KEY, role);
+      await storage.setItem(USER_TYPE_KEY, role);
       router.replace('/(tabs)');
     } catch (error) {
       console.error('Error saving user type:', error);

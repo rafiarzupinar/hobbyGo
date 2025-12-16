@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
 import { Colors } from '@/constants/theme';
 
 type Theme = 'light' | 'dark';
@@ -15,6 +16,23 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const THEME_STORAGE_KEY = '@hobbygo_theme';
 
+// Storage wrapper for web/native compatibility
+const storage = {
+  async getItem(key: string): Promise<string | null> {
+    if (Platform.OS === 'web') {
+      return localStorage.getItem(key);
+    }
+    return AsyncStorage.getItem(key);
+  },
+  async setItem(key: string, value: string): Promise<void> {
+    if (Platform.OS === 'web') {
+      localStorage.setItem(key, value);
+      return;
+    }
+    return AsyncStorage.setItem(key, value);
+  },
+};
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('dark');
 
@@ -25,7 +43,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const loadTheme = async () => {
     try {
-      const savedTheme = await AsyncStorage.getItem(THEME_STORAGE_KEY);
+      const savedTheme = await storage.getItem(THEME_STORAGE_KEY);
       if (savedTheme === 'light' || savedTheme === 'dark') {
         setThemeState(savedTheme);
       }
@@ -36,7 +54,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const saveTheme = async (newTheme: Theme) => {
     try {
-      await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme);
+      await storage.setItem(THEME_STORAGE_KEY, newTheme);
     } catch (error) {
       console.error('Error saving theme:', error);
     }
