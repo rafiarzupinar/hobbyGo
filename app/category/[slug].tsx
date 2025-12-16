@@ -17,7 +17,7 @@ import { useCategories } from '@/hooks/useCategories';
 import { useSubcategories } from '@/hooks/useSubcategories';
 import { useEvents } from '@/hooks/useEvents';
 import { useTheme } from '@/contexts/ThemeContext';
-import { CategoryColors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
+import { CategoryColors, Spacing, BorderRadius, FontSizes, Colors } from '@/constants/theme';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
 import type { Event } from '@/types';
@@ -99,7 +99,7 @@ export default function CategoryScreen() {
           title: category.name,
           headerShown: true,
           headerStyle: {
-            backgroundColor: colors.background,
+            backgroundColor: staticColors.background,
           },
           headerTintColor: colors.foreground,
         }}
@@ -272,10 +272,13 @@ export default function CategoryScreen() {
   );
 }
 
+// Static colors for StyleSheet
+const staticColors = Colors.dark;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: staticColors.background,
   },
   scrollView: {
     flex: 1,
@@ -307,7 +310,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: FontSizes.lg,
     fontWeight: '600',
-    color: colors.foreground,
+    color: staticColors.foreground,
     marginHorizontal: Spacing.lg,
     marginBottom: Spacing.md,
   },
@@ -326,25 +329,25 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: colors.card,
+    backgroundColor: staticColors.card,
     borderWidth: 2,
-    borderColor: colors.border,
+    borderColor: staticColors.border,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.xs,
   },
   subcategoryCircleActive: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    backgroundColor: staticColors.primary,
+    borderColor: staticColors.primary,
   },
   subcategoryName: {
     fontSize: FontSizes.xs,
-    color: colors.foreground,
+    color: staticColors.foreground,
     textAlign: 'center',
     fontWeight: '500',
   },
   subcategoryNameActive: {
-    color: colors.primary,
+    color: staticColors.primary,
     fontWeight: '600',
   },
   loader: {
@@ -352,17 +355,17 @@ const styles = StyleSheet.create({
   },
   eventCard: {
     flexDirection: 'row',
-    backgroundColor: colors.card,
+    backgroundColor: staticColors.card,
     marginHorizontal: Spacing.lg,
     marginBottom: Spacing.md,
     borderRadius: BorderRadius.lg,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: staticColors.border,
   },
   eventDateBadge: {
     width: 60,
-    backgroundColor: colors.primary,
+    backgroundColor: staticColors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: Spacing.sm,
@@ -388,7 +391,7 @@ const styles = StyleSheet.create({
   eventTitle: {
     fontSize: FontSizes.md,
     fontWeight: '600',
-    color: colors.foreground,
+    color: staticColors.foreground,
     marginBottom: Spacing.xs,
   },
   eventMeta: {
@@ -399,7 +402,7 @@ const styles = StyleSheet.create({
   },
   eventMetaText: {
     fontSize: FontSizes.sm,
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
     flex: 1,
   },
   eventFooter: {
@@ -411,11 +414,11 @@ const styles = StyleSheet.create({
   eventPrice: {
     fontSize: FontSizes.md,
     fontWeight: '600',
-    color: colors.primary,
+    color: staticColors.primary,
   },
   eventCapacity: {
     fontSize: FontSizes.sm,
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
   },
   emptyState: {
     alignItems: 'center',
@@ -424,13 +427,13 @@ const styles = StyleSheet.create({
   },
   emptyStateText: {
     fontSize: FontSizes.md,
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
     marginTop: Spacing.md,
     textAlign: 'center',
   },
   errorText: {
     fontSize: FontSizes.lg,
-    color: colors.mutedForeground,
+    color: staticColors.mutedForeground,
     textAlign: 'center',
   },
 });
