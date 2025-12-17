@@ -363,6 +363,18 @@ export default function ProfileScreen() {
                 <>
                   <TouchableOpacity
                     style={styles.settingsItem}
+                    onPress={() => router.push('/workshop-dashboard')}
+                  >
+                    <View style={styles.settingsItemLeft}>
+                      <Ionicons name="stats-chart" size={20} color={colors.primary} />
+                      <Text style={[styles.settingsItemText, { color: staticColors.primary }]}>
+                        Atölye Paneli
+                      </Text>
+                    </View>
+                    <Ionicons name="chevron-forward" size={20} color={colors.primary} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.settingsItem}
                     onPress={() => router.push('/create-workshop')}
                   >
                     <View style={styles.settingsItemLeft}>
